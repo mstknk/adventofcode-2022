@@ -21,4 +21,12 @@ public class Day2Test {
         assertEquals(15, result);
     }
 
+    @Test
+    void assertThatPart2Result() throws IOException, IllegalAccessException {
+        Path path = FileSystems.getDefault().getPath("src/test/resources/day2_input.txt");
+        List<String> data = Files.readAllLines(path);
+        long result = Day2.getPart2Result(data);
+
+        assertEquals(12, result);
+    }
 }

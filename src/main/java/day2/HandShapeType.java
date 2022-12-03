@@ -12,4 +12,29 @@ public enum HandShapeType {
         return score;
     }
 
+    public HandShapeType getWinHandShapeType() throws IllegalAccessException {
+        switch (this) {
+            case PAPER:
+                return SCISSORS;
+            case SCISSORS:
+                return ROCK;
+            case ROCK:
+                return PAPER;
+            default:
+                throw new IllegalAccessException();
+        }
+    }
+
+    public HandShapeType getLoseHandShapeType() throws IllegalAccessException {
+        switch (this) {
+            case SCISSORS:
+                return PAPER;
+            case ROCK:
+                return SCISSORS;
+            case PAPER:
+                return ROCK;
+            default:
+                throw new IllegalAccessException();
+        }
+    }
 }

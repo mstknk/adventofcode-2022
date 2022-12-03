@@ -30,6 +30,31 @@ public class Day2 {
         return totalScore;
     }
 
+    public static int getPart2Result(List<String> data) throws IllegalAccessException {
+        int totalScore = 0;
+        for (String str : data) {
+            String[] split = str.split(" ");
+            HandShapeType opponent = opponentMap.get(split[0]);
+            HandShapeType you = getHandShapeTypeByEnd(opponent, split[1]);
+
+            totalScore += getScore(opponent, you) + you.getScore();
+        }
+        return totalScore;
+    }
+
+    private static HandShapeType getHandShapeTypeByEnd(HandShapeType opponent, String youStr) throws IllegalAccessException {
+        if (youStr.equals("Y")) {
+            return opponent;
+        }
+        if (youStr.equals("X")) {
+            return opponent.getLoseHandShapeType();
+        }
+        if (youStr.equals("Z")) {
+            return opponent.getWinHandShapeType();
+        }
+        throw new IllegalAccessException();
+    }
+
     private static int getScore(HandShapeType opponent, HandShapeType you) {
         if (opponent == you) {
             return 3;
@@ -46,4 +71,5 @@ public class Day2 {
         }
         return 0;
     }
+
 }
