@@ -5,7 +5,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static day2.HandShapeType.*;
 
@@ -13,36 +12,27 @@ public class Day2 {
     private static Map<String, HandShapeType> opponentMap = Map.of("A", ROCK, "B", PAPER, "C", SCISSORS);
     private static Map<String, HandShapeType> youMap = Map.of("X", ROCK, "Y", PAPER, "Z", SCISSORS);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, IllegalAccessException {
         Path path = FileSystems.getDefault().getPath("src/main/resources/day2_input.txt");
         List<String> data = Files.readAllLines(path);
-        System.out.println(getPart1Result(data));
+        System.out.println(getResult(data, false));
+        System.out.println(getResult(data, true));
     }
 
-    public static int getPart1Result(List<String> data) {
+    public static int getResult(List<String> data, boolean isHowToEnd) throws IllegalAccessException {
         int totalScore = 0;
         for (String str : data) {
             String[] split = str.split(" ");
-            HandShapeType opponent = opponentMap.get(split[0]);
-            HandShapeType you = youMap.get(split[1]);
+            String opponentStr = split[0];
+            HandShapeType opponent = opponentMap.get(opponentStr);
+            String youStr = split[1];
+            HandShapeType you = isHowToEnd ? getHandShapeTypeByHowToEnd(opponent, youStr) : youMap.get(youStr);
             totalScore += getScore(opponent, you) + you.getScore();
         }
         return totalScore;
     }
 
-    public static int getPart2Result(List<String> data) throws IllegalAccessException {
-        int totalScore = 0;
-        for (String str : data) {
-            String[] split = str.split(" ");
-            HandShapeType opponent = opponentMap.get(split[0]);
-            HandShapeType you = getHandShapeTypeByEnd(opponent, split[1]);
-
-            totalScore += getScore(opponent, you) + you.getScore();
-        }
-        return totalScore;
-    }
-
-    private static HandShapeType getHandShapeTypeByEnd(HandShapeType opponent, String youStr) throws IllegalAccessException {
+    private static HandShapeType getHandShapeTypeByHowToEnd(HandShapeType opponent, String youStr) throws IllegalAccessException {
         if (youStr.equals("Y")) {
             return opponent;
         }

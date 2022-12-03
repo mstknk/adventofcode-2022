@@ -13,10 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Day2Test {
     @Test
-    void assertThatPart1Result() throws IOException {
+    void assertThatPart1Result() throws IOException, IllegalAccessException {
         Path path = FileSystems.getDefault().getPath("src/test/resources/day2_input.txt");
         List<String> data = Files.readAllLines(path);
-        long result = Day2.getPart1Result(data);
+        long result = Day2.getResult(data, false);
 
         assertEquals(15, result);
     }
@@ -25,7 +25,7 @@ public class Day2Test {
     void assertThatPart2Result() throws IOException, IllegalAccessException {
         Path path = FileSystems.getDefault().getPath("src/test/resources/day2_input.txt");
         List<String> data = Files.readAllLines(path);
-        long result = Day2.getPart2Result(data);
+        long result = Day2.getResult(data, true);
 
         assertEquals(12, result);
     }
